@@ -1,0 +1,17 @@
+name: Build and Publish
+on: push
+
+jobs:
+    build-container:
+        name: Build docker image
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v2
+            - name: Publish Code
+              uses: docker/build-push-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME}}
+                  password: ${{ secrets.DOCKERHUB_TOKEN}}
+                  repository: glifth/supplychaintest
+                  tags: latest, ${{ github.run_number }}
